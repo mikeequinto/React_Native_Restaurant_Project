@@ -1,18 +1,25 @@
+import React from 'react';
+
 import { Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
 // Import createStackNavigator to switch between screens
 import { createAppContainer, createSwitchNavigator} from 'react-navigation'; 
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { Ionicons } from '@expo/vector-icons';
 
 // Import screens
 import LoginScreen from './screens/Login';
 import SignUpScreen from './screens/SignUp';
-import HomeScreen from './screens/Home';
 import LoadingScreen from './screens/Loading';
 
-// or any pure javascript modules available in npm
-import { Card } from 'react-native-paper';
+import HomeScreen from './screens/Home';
+import MenuScreen from './screens/Menu';
+import ProfileScreen from './screens/Profile';
+
+//Shopping cart
+import CartScreen from './screens/Cart';
 
 // Firebase
 import * as firebase from 'firebase';
@@ -32,9 +39,34 @@ if (!firebase.apps.length) {
    firebase.initializeApp(firebaseConfig);
 }
 
-const AppStack = createStackNavigator({
-  Home: HomeScreen
-})
+const AppTabNavigator = createBottomTabNavigator (
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-home" size={24} color={tintColor} />,
+      }
+    },
+    Menu: {
+      screen: MenuScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-book" size={24} color={tintColor} />
+      }
+    },
+    Cart: {
+      screen: CartScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-cart" size={24} color={tintColor} />
+      }
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-person" size={24} color={tintColor} />
+      }
+    }
+  }
+)
 
 const AuthStack = createStackNavigator({
   Login: LoginScreen,
@@ -46,7 +78,7 @@ export default createAppContainer (
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
-      App: AppStack,
+      App: AppTabNavigator,
       Auth: AuthStack
     },
     {

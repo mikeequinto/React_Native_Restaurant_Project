@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Button } fr
 
 import * as firebase from 'firebase';
 
-export default class Home extends React.Component {
+export default class Profile extends React.Component {
 
   state = {
     emailAddress: '',
@@ -25,9 +25,12 @@ export default class Home extends React.Component {
       <View style={styles.container}>
 
         <Text style={styles.paragraph}>
-          Hi { this.state.displayName }
+            <Text>Profile</Text>
         </Text>
 
+        <TouchableOpacity style={styles.signOutButton} onPress={this.signOutUser}>
+          <Text>Log out</Text>
+        </TouchableOpacity>
       </View>
     );
   }
