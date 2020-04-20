@@ -134,7 +134,7 @@ export default class Cart extends React.Component {
 
           </View>
           
-          : <Checkout total={this.state.total} back={this.goToCart} reset={this.resetCart}></Checkout>
+          : <Checkout back={this.goToCart} reset={this.resetCart}></Checkout>
       
         }
 

@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#E9446A',
     borderRadius: 4,
     height: 40,
-    fontSize: 15,
     justifyContent: 'center',
   },
   signUpQuestion: {

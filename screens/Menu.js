@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import { Button, Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -49,7 +49,15 @@ export default class Menu extends React.Component {
 
         //Ajout d'un produit dans le panier
         cartUtility.addProduct(item)
+        this.createTwoButtonAlert()
         
+    }
+
+    createTwoButtonAlert() {
+        console.log('hey')
+        Alert.alert(
+            'You need to...'
+         )
     }
 
     render() {

@@ -16,11 +16,9 @@ class CartUtility {
       //Vérification dans firestore si l'utilisateur a un panier
       db.doc(uid).collection('items').doc(item.id).get().
             then(doc => {
-               console.log(uid);
                
                //Si non, on crée le panier avec le produit selectionné
                if(!doc.exists) {
-                  console.log('ghie');
 
                      db.doc(uid).collection('items').doc(item.id).set({
                         name : item.name,
@@ -32,8 +30,6 @@ class CartUtility {
                }else{
                   //On vérifie si le produit a déjà été ajouté dans le panier
                   this.addItemToExistingCart(item)
-                  console.log('heee');
-                  
                }
             })
    }
