@@ -24,12 +24,10 @@ export default class Profile extends React.Component {
     return (
       <View style={styles.container}>
 
-        <Text style={styles.paragraph}>
-            <Text>Profile</Text>
-        </Text>
+        <Text style={styles.title}>Profile</Text>
 
         <TouchableOpacity style={styles.signOutButton} onPress={this.signOutUser}>
-          <Text>Log out</Text>
+          <Text style={{color: 'white', textAlign: 'center'}}>Log out</Text>
         </TouchableOpacity>
       </View>
     );
@@ -42,6 +40,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24,
   },
+  title: {
+    margin: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 32
+  },
   paragraph: {
     margin: 24,
     marginTop: 0,
@@ -50,6 +54,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   signOutButton: {
-    marginTop: 32
+    marginTop: 32,
+    backgroundColor: "#f73131",
+    height: 50,
+    width: 100,
+    justifyContent: 'center',
+    borderRadius: 5
   }
 });

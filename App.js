@@ -24,6 +24,13 @@ import CartScreen from './screens/Cart';
 // Firebase
 import * as firebase from 'firebase';
 
+//Resolve atob error
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {  global.btoa = encode }
+
+if (!global.atob) { global.atob = decode }
+
 var firebaseConfig = {
   apiKey: "AIzaSyCWS4v2Dkqvs0OsdlQKuOnqizIKIfcP7W8",
   authDomain: "foodislife-92b0e.firebaseapp.com",

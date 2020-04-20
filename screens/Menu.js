@@ -4,7 +4,14 @@ import { Button, Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as firebase from 'firebase';
+import 'firebase/firestore';
+
 import { FlatList } from 'react-native-gesture-handler';
+
+//Star rating
+import { Rating, AirbnbRating } from 'react-native-elements';
+
+import cartUtility from './Utility/CartUtility';
  
 export default class Menu extends React.Component {
 
@@ -17,10 +24,9 @@ export default class Menu extends React.Component {
         this.ref = firebase.firestore().collection('ramens');
     }
 
-    
-    
     componentDidMount() {
 
+        //Récupération des ramens
         this.ref.onSnapshot((querySnapshot) => {
             const list = []
             querySnapshot.forEach(doc => {
@@ -40,66 +46,19 @@ export default class Menu extends React.Component {
     }
 
     addToCart(item) {
-        console.log('hey ' + item.name);
 
-        this.checkPendingOrder(item)
+        //Ajout d'un produit dans le panier
+        cartUtility.addProduct(item)
         
-    }
-
-    checkPendingOrder(item){
-
-        const { uid } = firebase.auth().currentUser;
-        const db = firebase.firestore().collection('pendingOrders')
-
-        db.doc(uid).get().
-            then(doc => {
-                if(!doc.exists) {
-                    console.log('first order');
-                    db.doc(uid).collection('items').doc(item.id).set({
-                        name : item.name,
-                        price: item.price,
-                        quantity: 1
-                    })
-                    
-                }else{
-                    console.log('document exists');
-                    this.checkItem(item)
-                }
-            })
-    }
-
-    checkItem(item){
-
-        const { uid } = firebase.auth().currentUser;
-        const db = firebase.firestore().collection('pendingOrders').doc(uid).collection('items')
-        
-
-        db.doc(item.id).get()
-            .then(sub => {
-                if(sub.exists){
-                    db.doc(item.id).update({
-                        quantity : firebase.firestore.FieldValue.increment(1)
-                    })
-                }else{
-                    db.doc(item.id).set({
-                        name : item.name,
-                        price: item.price,
-                        quantity: 1
-                    })
-                }
-            })
     }
 
     render() {
         return (
-
+            
+            
             <SafeAreaView style={ styles.container } >
-                
-                
 
-                <Text style={styles.paragraph}>
-                    <Text>Menu</Text>
-                </Text>
+                <Text style={styles.title}>Menu</Text>
 
                 <FlatList
                     data={ this.state.ramens }
@@ -107,10 +66,16 @@ export default class Menu extends React.Component {
                         return (
                             <Card
                                 title={item.name}
-                                image={item.imageUrl}>
+                                image={ item.imageUrl }>
                                 <Text style={{marginBottom: 10, fontWeight: 'bold', textAlign: 'center'}}>
                                     Price : {item.price} CHF
                                 </Text>
+                                <Rating
+                                    imageSize={20}
+                                    readonly
+                                    startingValue={item.rating}
+                                    style={{paddingBottom: 15}}
+                                />
                                 <Button
                                     icon={<Icon name='ios-cart' size={30} color='#ffffff' />}
                                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
@@ -133,12 +98,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24,
   },
-  paragraph: {
+  title: {
     margin: 24,
-    marginTop: 0,
-    fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 32
   },
   signOutButton: {
     marginTop: 32

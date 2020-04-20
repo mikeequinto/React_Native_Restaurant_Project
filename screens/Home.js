@@ -23,11 +23,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
-        <Text style={styles.paragraph}>
-          Hi { this.state.displayName }
-        </Text>
-
+        <Text style={styles.title}>Home</Text>
       </View>
     );
   }
@@ -39,12 +35,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24,
   },
-  paragraph: {
+  title: {
     margin: 24,
-    marginTop: 0,
-    fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 32
   },
   signOutButton: {
     marginTop: 32
