@@ -9,7 +9,8 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 //Star rating
-import { Rating, AirbnbRating } from 'react-native-elements';
+import { Rating } from 'react-native-elements';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import cartUtility from './Utility/CartUtility';
  
@@ -19,13 +20,13 @@ export default class Menu extends React.Component {
         super(props);
         this.state = {
             ramens: [],
-            hide: true
+            hide: true,
+            showAlert: false
         }
         this.ref = firebase.firestore().collection('ramens');
     }
 
     componentDidMount() {
-
         //Récupération des ramens
         this.ref.onSnapshot((querySnapshot) => {
             const list = []
@@ -42,23 +43,20 @@ export default class Menu extends React.Component {
                 ramens: list
             })
         });
-
     }
 
     addToCart(item) {
-
         //Ajout d'un produit dans le panier
         cartUtility.addProduct(item)
-        this.createTwoButtonAlert()
-        
+        //Affichage du message
+        this.setState({showAlert: true})
     }
 
-    createTwoButtonAlert() {
-        console.log('hey')
-        Alert.alert(
-            'You need to...'
-         )
-    }
+    hideAlert = () => {
+        this.setState({
+          showAlert: false
+        });
+      };
 
     render() {
         return (
@@ -93,6 +91,24 @@ export default class Menu extends React.Component {
                         )
                     }}
                 ></FlatList>
+
+                <AwesomeAlert
+                    show={this.state.showAlert}
+                    showProgress={false}
+                    title="Good job!"
+                    message="Ramen successfully been added to cart!"
+                    closeOnTouchOutside={true}
+                    closeOnHardwareBackPress={false}
+                    showConfirmButton={true}
+                    confirmText="Continue shopping"
+                    confirmButtonColor="#2ecc71"
+                    onCancelPressed={() => {
+                        this.hideAlert();
+                    }}
+                    onConfirmPressed={() => {
+                        this.hideAlert();
+                    }}
+                />
 
             </SafeAreaView>
 

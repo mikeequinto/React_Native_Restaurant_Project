@@ -21,6 +21,9 @@ import ProfileScreen from './screens/Profile';
 //Shopping cart
 import CartScreen from './screens/Cart';
 
+//Orders
+import OrdersScreen from './screens/Orders';
+
 // Firebase
 import * as firebase from 'firebase';
 
@@ -64,6 +67,12 @@ const AppTabNavigator = createBottomTabNavigator (
       screen: CartScreen,
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-cart" size={24} color={tintColor} />
+      }
+    },
+    Orders: {
+      screen: OrdersScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-car" size={24} color={tintColor} />
       }
     },
     Profile: {

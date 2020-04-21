@@ -3,10 +3,13 @@ import {  Text, View, StyleSheet, TouchableOpacity, TextInput, Picker } from 're
 import Modal from 'react-native-modal';
 
  import { Button } from 'react-native-elements';
+ import AwesomeAlert from 'react-native-awesome-alerts';
+
 
 import * as firebase from 'firebase';
 
 import Cart from './Cart';
+import Profile from './Profile';
 
 export default class Checkout extends React.Component {
 
@@ -16,20 +19,22 @@ export default class Checkout extends React.Component {
         total: '',
         currentMonth: new Date().getMonth()+1,
         currentYear: new Date().getFullYear(),
-        cardNumber: 12345678910123,
+        cardNumber: '',
         months: [1,2,3,4,5,6,7,8,9,10,11,12],
         years: [],
         expiryDateMonth: 1,
         expiryDateYear: 2019,
-        cvc: 123,
+        cvc: '',
         cardName: '',
-        error: false
+        error: false,
+        showAlert: false
     }
     const { uid } = firebase.auth().currentUser;
-    this.ref = firebase.firestore().collection('pendingOrders').doc(uid).collection('items');
-
+    this.userRef = firebase.firestore().collection('users').doc(uid);
+    this.pendingOrderRef = firebase.firestore().collection('pendingOrders').doc(uid);
+    this.orderRef = firebase.firestore().collection('orders').doc(uid);
     //Récupération du total à payer
-    this.ref.onSnapshot((querySnapshot) => {
+    this.pendingOrderRef.collection('items').onSnapshot((querySnapshot) => {
       this.setState( {total: 0} )
       querySnapshot.forEach(doc => {
           //Calcul du total à payer
@@ -38,6 +43,7 @@ export default class Checkout extends React.Component {
           this.setState({total: value})
       })
     });
+
   }
 
   componentDidMount(){
@@ -51,16 +57,43 @@ export default class Checkout extends React.Component {
     this.setState({years: years})
   }
 
+  checkDeliveryAddress = () => {
+
+    //Vérification si l'utilisateur a indiqué son adresse de livraison
+    //Récupération de l'adresse de livraison
+    this.userRef.get().then(doc => {
+      if(doc.exists){
+
+        if(doc.data().deliveryAddress != "" && doc.get("deliveryAddress") != null){
+          this.confirmPayment()
+        }else{
+          this.setState({ showAddressError: true })
+        }
+      }
+    })
+  }
+
   confirmPayment = () => {
 
     if( this.state.cardNumber !== '' && this.state.cvc !== '' && this.state.cardName !== ''){
-      this.setState({ error: false})
-      alert("Your order is on the way!")
-      
+      this.setState({ 
+        error: false,
+        showAlert: true
+      })
       //Ajout de la commande dans firestore
+      this.orderRef.collection('userOrders').add({
+        date: new Date(),
+        total: this.state.total,
+        status:'Delivered'
+      })
       //Réinitialisation du panier
-      this.props.reset()
-      this.props.back()
+      this.pendingOrderRef.collection('items').get().then( querySnapshot => {
+        querySnapshot.forEach( doc => {
+          
+          this.pendingOrderRef.collection('items').doc(doc.id).delete()
+        })
+      })
+
     }else{
       this.setState({ error: true })
     }
@@ -69,6 +102,18 @@ export default class Checkout extends React.Component {
   goToCart = () => {
     this.props.back()
   }
+
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    });
+  };
+
+  hideAddressAlert = () => {
+    this.setState({
+      showAddressError: false
+    });
+  };
 
   render() {
     return (
@@ -143,13 +188,50 @@ export default class Checkout extends React.Component {
           : null
         }
 
-        <TouchableOpacity style={styles.checkoutButton} onPress={this.confirmPayment}>
+        <TouchableOpacity style={styles.checkoutButton} onPress={this.checkDeliveryAddress}>
           <Text style={{ color: '#FFF', textAlign: 'center'}}>Confirm order</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.backButton} onPress={this.goToCart}>
           <Text style={{ textAlign: 'center'}}>Back to cart</Text>
         </TouchableOpacity> 
+
+        <AwesomeAlert
+          show={this.state.showAlert}
+          showProgress={false}
+          title="Congratulations!"
+          message="Your order is on the way!"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Okay, got it!"
+          confirmButtonColor="#2ecc71"
+          onCancelPressed={() => {
+              this.hideAlert();
+          }}
+          onConfirmPressed={() => {
+              this.hideAlert();
+              this.goToCart()
+          }}
+        />
+
+        <AwesomeAlert
+          show={this.state.showAddressError}
+          showProgress={false}
+          title="No delivery address!"
+          message="Please update your delivery address in your profile"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Okay, got it!"
+          confirmButtonColor="#2ecc71"
+          onCancelPressed={() => {
+              this.hideAddressAlert();
+          }}
+          onConfirmPressed={() => {
+              this.hideAddressAlert();
+          }}
+        />
 
       </View>
     )
