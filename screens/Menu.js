@@ -84,7 +84,13 @@ export default class Menu extends React.Component {
                                 />
                                 <Button
                                     icon={<Icon name='ios-cart' size={30} color='#ffffff' />}
-                                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                                    buttonStyle={{
+                                        borderRadius: 5, 
+                                        marginLeft: 0, 
+                                        marginRight: 0, 
+                                        marginBottom: 0,
+                                        backgroundColor: '#e74c3c'
+                                    }}
                                     title=' Add to cart' 
                                     onPress={ () => this.addToCart(item) } />
                             </Card>
@@ -124,7 +130,7 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: 24,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
     fontSize: 32
   },

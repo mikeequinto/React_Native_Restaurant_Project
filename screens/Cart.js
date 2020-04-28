@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    padding: 24,
+    padding: 15,
   },
   title: {
     margin: 24,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
     fontSize: 32
   },
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   itemOptionsButton: {
     textAlign: 'center',
-    backgroundColor: '#e8e8e8',
+    backgroundColor: '#ecf0f1',
     padding: 10,
     width: 32,
     marginRight: 15,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   removeButton: {
     textAlign: "center",
-    backgroundColor: '#f73131',
+    backgroundColor: '#e74c3c',
     padding: 10,
     borderRadius : 5, 
     color: 'white'
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   checkoutButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#E9446A',
+    backgroundColor: '#2ecc71',
     borderRadius: 4,
     height: 40,
     justifyContent: 'center',

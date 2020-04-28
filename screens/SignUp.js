@@ -102,8 +102,9 @@ export default class SignUp extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     padding: 24,
+    backgroundColor: 'white',
+    minHeight: '100%'
   },
   title: {
     fontSize: 32,
@@ -113,12 +114,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     marginBottom: 15,
-    height: 40,
+    height: 50,
     paddingLeft: 10,
+    borderWidth: 1,
+    borderColor: 'lightgrey'
   },
   RegisterButton: {
     marginTop: 20,
-    backgroundColor: '#E9446A',
+    backgroundColor: '#2ecc71',
     borderRadius: 4,
     height: 40,
     justifyContent: 'center',

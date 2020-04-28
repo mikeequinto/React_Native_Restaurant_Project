@@ -20,6 +20,7 @@ import ProfileScreen from './screens/Profile';
 
 //Shopping cart
 import CartScreen from './screens/Cart';
+import CartIcon from './screens/Utility/CartIcon';
 
 //Orders
 import OrdersScreen from './screens/Orders';
@@ -29,6 +30,7 @@ import * as firebase from 'firebase';
 
 //Resolve atob error
 import {decode, encode} from 'base-64'
+import cartUtility from './screens/Utility/CartUtility';
 
 if (!global.btoa) {  global.btoa = encode }
 
@@ -60,25 +62,26 @@ const AppTabNavigator = createBottomTabNavigator (
     Menu: {
       screen: MenuScreen,
       navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-book" size={24} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Ionicons name="ios-book" size={24} color={tintColor} />
       }
     },
     Cart: {
       screen: CartScreen,
       navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-cart" size={24} color={tintColor} />
-      }
+        tabBarIcon: ({ tintColor }) =>
+          <CartIcon color={tintColor}/>
+        }
     },
     Orders: {
       screen: OrdersScreen,
       navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-car" size={24} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Ionicons name="ios-car" size={24} color={tintColor} />
       }
     },
     Profile: {
       screen: ProfileScreen,
       navigationOptions: {
-        tabBarIcon: ({ focused, tintColor }) => <Ionicons name="ios-person" size={24} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Ionicons name="ios-person" size={24} color={tintColor} />
       }
     }
   }

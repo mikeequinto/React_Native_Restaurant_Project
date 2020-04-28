@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Button } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 
@@ -81,10 +81,10 @@ export default class Profile extends React.Component {
  
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Profile</Text>
 
-        <View style={{alignSelf: 'stretch'}}>
+        <View style={[{padding: '15px'},{alignSelf: 'stretch'}]}>
 
           <View>
             <Text>Name</Text>
@@ -95,7 +95,10 @@ export default class Profile extends React.Component {
           </View>
 
           <View>
-            <Text>E-mail</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text>E-mail</Text>
+              <Text style={{fontStyle:'italic'}}> (unchangeable)</Text>
+            </View>
             <TextInput 
               style={styles.input} editable={false}
               placeholder={this.state.emailAddress} />
@@ -109,59 +112,52 @@ export default class Profile extends React.Component {
               placeholder={this.state.deliveryAddress || "Please enter your delivery address"} />
           </View>
 
-          <TouchableOpacity style={[styles.button, {backgroundColor: '#2fd437'}]} onPress={this.handleUpdate}>
+          <TouchableOpacity style={[styles.button, {backgroundColor: '#2ecc71'},{width: '100%'}]} onPress={this.handleUpdate}>
             <Text style={{color: 'white', textAlign: 'center'}}>Apply changes</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.button, {backgroundColor: "#f73131"}]} onPress={this.signOutUser}>
+          <TouchableOpacity style={[styles.button, {backgroundColor: "#e74c3c"}]} onPress={this.signOutUser}>
             <Text style={{color: 'white', textAlign: 'center'}}>Log out</Text>
           </TouchableOpacity>
-
-          <AwesomeAlert
-            show={this.state.showAlert}
-            showProgress={false}
-            title="Congratulations!"
-            message="Profile successfully updated!"
-            closeOnTouchOutside={true}
-            closeOnHardwareBackPress={false}
-            showConfirmButton={true}
-            confirmText="Okay, got it!"
-            confirmButtonColor="#2ecc71"
-            onCancelPressed={() => {
-                this.hideAlert();
-            }}
-            onConfirmPressed={() => {
-                this.hideAlert();
-            }}
-          />
           
         </View>
 
-      </View>
+        <AwesomeAlert
+          show={this.state.showAlert}
+          showProgress={false}
+          title="Congratulations!"
+          message="Profile successfully updated!"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Okay, got it!"
+          confirmButtonColor="#2ecc71"
+          onCancelPressed={() => {
+              this.hideAlert();
+          }}
+          onConfirmPressed={() => {
+              this.hideAlert();
+          }}
+        />
+
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    padding: 24,
+    alignItems: 'center',
+    minHeight: '100%',
   },
   title: {
     margin: 24,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
     fontSize: 32
   },
-  paragraph: {
-    margin: 24,
-    marginTop: 0,
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   button: {
-    marginTop: 32,
+    marginTop: 18,
     height: 50,
     width: 100,
     justifyContent: 'center',
@@ -169,8 +165,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   input: {
-    padding: 10,
-    backgroundColor: 'lightyellow',
-    marginBottom: 20
-  }
+    backgroundColor: 'white',
+    marginBottom: 15,
+    height: 50,
+    paddingLeft: 10,
+    borderWidth: 1,
+    borderColor: 'lightgrey'
+  },
 });

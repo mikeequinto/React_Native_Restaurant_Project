@@ -84,7 +84,7 @@ export default class Checkout extends React.Component {
       this.orderRef.collection('userOrders').add({
         date: new Date(),
         total: this.state.total,
-        status:'Delivered'
+        status:'On the way'
       })
       //Réinitialisation du panier
       this.pendingOrderRef.collection('items').get().then( querySnapshot => {
@@ -118,7 +118,7 @@ export default class Checkout extends React.Component {
   render() {
     return (
 
-      <View style={{alignSelf: 'stretch'}}>
+      <View style={{alignSelf: 'stretch'},{minHeight: '100%'}}>
 
         <Text style={styles.title}>Checkout</Text>
 
@@ -239,14 +239,9 @@ export default class Checkout extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 24,
-  },
   title: {
     margin: 24,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
     fontSize: 32
   },
@@ -279,7 +274,7 @@ const styles = StyleSheet.create({
   checkoutButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#E9446A',
+    backgroundColor: '#2ecc71',
     borderRadius: 4,
     height: 40,
     justifyContent: 'center',
@@ -288,7 +283,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
     width: 100,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ecf0f1',
     borderRadius: 4,
     height: 40,
     alignSelf: 'center',
@@ -309,7 +304,7 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   errorMessage: {
-    color: '#f73131',
+    color: '#e74c3c',
     textAlign: 'center',
     marginTop: 20
   }

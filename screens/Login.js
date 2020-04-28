@@ -3,7 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
+  ImageBackground,
   TextInput,
   TouchableOpacity
 } from 'react-native';
@@ -34,6 +34,10 @@ export default class Login extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>ICHIRAKU RAMEN</Text>
 
+        <ImageBackground 
+            source='https://firebasestorage.googleapis.com/v0/b/foodislife-92b0e.appspot.com/o/images%2Framen.png?alt=media&token=a6a81c43-c716-4250-a669-24e491239c3a'
+            style={styles.image}></ImageBackground>
+
         <View style={styles.errorMessage}>
           {this.state.errorMessage && <Text style={{ color: 'red'}}>{this.state.errorMessage}</Text>}
         </View>
@@ -63,7 +67,7 @@ export default class Login extends React.Component {
         <Text style={styles.signUpQuestion}>Don't have an account?</Text>
 
         <TouchableOpacity style={styles.signUpButton} onPress={ () => this.props.navigation.navigate("SignUp")}>
-          <Text style={{ color: '#E9446A' }}>Sign up</Text>
+          <Text>Sign up</Text>
         </TouchableOpacity>
 
       </View>
@@ -74,7 +78,17 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     padding: 24,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    minHeight: '100%'
+  },
+  image: {
+    width: 200,
+    height: 175,
+    margin: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ecf0f1',
+    alignSelf: 'center'
   },
   centerText: {
     alignItems: 'center',
@@ -82,17 +96,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    textAlign: 'center',
-    paddingBottom: 30,
+    fontWeight: '600',
+    margin: 24,
+    textAlign: 'center'
   },
   input: {
     backgroundColor: 'white',
     marginBottom: 15,
-    height: 40,
+    height: 50,
     paddingLeft: 10,
+    borderWidth: 1,
+    borderColor: 'lightgrey'
   },
   loginButton: {
-    backgroundColor: '#E9446A',
+    backgroundColor: '#2ecc71',
     borderRadius: 4,
     height: 40,
     justifyContent: 'center',
@@ -103,7 +120,13 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   signUpButton: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    height: 50,
+    width: 75,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ecf0f1',
   },
   errorMessage: {
     marginTop: 15,
