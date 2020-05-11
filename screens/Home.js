@@ -168,10 +168,10 @@ export default class Home extends React.Component {
               <Text style={styles.subtitle3}>
                 Address
               </Text>
-              <Text style={{textAlign:'center'}}>
+              <Text style={{textAlign:'center', fontWeight: 500}}>
                 3 Rue de la médecine
               </Text>
-              <Text style={{textAlign:'center'}}>
+              <Text style={{textAlign:'center', fontWeight: 500}}>
                 1204 Genève
               </Text>
             </View>
@@ -183,7 +183,7 @@ export default class Home extends React.Component {
                 <Text style={{width: 100}}>
                   Mon - Sat :
                 </Text>
-                <Text style={{marginLeft:16}}>
+                <Text style={{marginLeft:16, fontWeight: 500}}>
                   11AM - 10PM
                 </Text>
               </View>
@@ -191,7 +191,7 @@ export default class Home extends React.Component {
                 <Text style={{width: 100}}>
                   Sun :
                 </Text>
-                <Text style={{marginLeft:16}}>
+                <Text style={{marginLeft:16, fontWeight: 500}}>
                   11AM - 2PM
                 </Text>
               </View>
