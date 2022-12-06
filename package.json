@@ -16,7 +16,7 @@
     "@react-navigation/native": "^5.1.4",
     "base-64": "^0.1.0",
     "expo": "~36.0.0",
-    "expo-cli": "^3.18.4",
+    "expo-cli": "^6.0.8",
     "firebase": "^7.14.1",
     "popup-ui": "^1.0.10",
     "react": "~16.9.0",
